@@ -1,0 +1,21 @@
+#nav {
+margin: 0 0 0 0px;
+padding: 12px 0 8px 0;
+clear: both;
+background: #FAEBD7 url(images/nav_corner.gif) left bottom no-repeat;
+}
+
+#navlist li{
+	display:inline;	
+	list-style-type: none;
+	padding-right: 20px;
+	float: left;
+}
+#SignInBtn{
+	background:#FAEBD7;
+}
+
+#Login {
+margin: -2px 20px 0 0;
+float: right;
+}
