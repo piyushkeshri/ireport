@@ -26,8 +26,8 @@ class ireport extends CI_Controller {
 		//Kar}
 		
 		//$this->load->view('ireport_upload_form', array('error' => ' ' ));
-		$this->load->view('ireport_update_status_form', array('error' => ' '));
-		//$this->load->view('ireport_search_report_form', array('error' => ' ')); 
+		//$this->load->view('ireport_update_status_form', array('error' => ' '));
+		$this->load->view('ireport_search_report_form', array('error' => ' ')); 
 	}
 	
 	// Function used to upload a report by the user
@@ -175,8 +175,9 @@ class ireport extends CI_Controller {
 		//$username = $this->session->userdata('session_id');	//Assume this is the username for timebeing. Later this would be replaced with above data.
 		$username = "vivekrpg";
 		//echo $session_id;
-		$criteria = $this->input->post('criteria');
-		$value	 = $this->input->post('value');
+		$category = $this->input->post('category');
+		$severity = $this->input->post('severity');
+		//$value	 = $this->input->post('value');
 
 		//if($this->ion_auth->logged_in()) {
 		//	if($this->input->post('identity')) {

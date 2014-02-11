@@ -22,7 +22,6 @@ class ireport_model extends CI_Model
                 $latestSID = 0;
                 $userID = "karthipd";
                 
-    
                 $data = array(
                         'username' => $userID,
                         'title' => $title,
