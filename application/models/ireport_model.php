@@ -22,6 +22,7 @@ class ireport_model extends CI_Model
                 $latestSID = 0;
                 $userID = "karthipd";
                 
+    
                 $data = array(
                         'username' => $userID,
                         'title' => $title,
@@ -39,11 +40,12 @@ class ireport_model extends CI_Model
                 return $this->db->insert_id();                
 	}
         
-        public function upload_status($reportID, $desc)
+        public function upload_status($reportID, $desc, $prog)
 	{            
 		$data = array(
                         'reportID' => $reportID,
-                        'description' => $desc
+                        'description' => $desc,
+			'progress' => $prog
                 );
 
 	        if(!($this->db->insert('status_table', $data)))
