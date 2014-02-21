@@ -173,17 +173,36 @@ class ireport extends CI_Controller {
 		//	'old_last_login' => $user->last_login
 		//);
 		//$username = $this->session->userdata('session_id');	//Assume this is the username for timebeing. Later this would be replaced with above data.
-		$username = "vivekrpg";
+		$username = "vvgupta";
 		//echo $session_id;
 		$category = $this->input->post('category');
 		$severity = $this->input->post('severity');
-		//$value	 = $this->input->post('value');
-
+		$reportID = $this->input->post('reportID');
+		$error = 0;
+		
+		if(!empty($reportID)) {
+			if(!is_numeric($reportID)) {
+				echo "Error: Report ID must be a number";
+				$this->load->view('ireport_search_report_form');
+				$error = 1;
+				return 1;
+			}
+		}
+		
 		//if($this->ion_auth->logged_in()) {
 		//	if($this->input->post('identity')) {
-		$data['dummy'] = $this->ireport_model->view_reports($username,$criteria,$value);
+		$data['dummy'] = $this->ireport_model->view_reports($username,$category,$severity,$reportID);
 		//print_r($data);
-		$this->load->view('display_report',$data);
+		if(empty($data['dummy'])) {
+			echo "The query you run returned no data. Please specify again.\n";
+			$this->load->view('ireport_search_report_form');
+			$error = 1;
+			return 1;
+		}
+		
+		if(!$error) {
+			$this->load->view('display_report',$data);
+		}
 		//	}
 		//} else {
 		//	echo "This directs to homepage \n"; //$this->load->view('home'); 

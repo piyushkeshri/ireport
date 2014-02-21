@@ -17,21 +17,23 @@
 <tr>
    <th>ReportID</th>
    <th>UserName</th>
-   <th>Date of Creation</th>
    <th>GPS Location</th>
-   <th>Category</th>
-   <th>Severity</th>
    <th>Latest Status</th>
+   <th>Category</th>
+   <th>Date of Creation</th>
+   <th>Severity</th>
    <th>Link to Image<th>
 </tr>
 
+<?php foreach ($dummy as $row) :?>
 <tr>
-   <?php foreach ($dummy as $item) :?>
-   <td>
-       <?php echo $item;?>
-   </td>    
-   <?php endforeach; ?>
+    <?php foreach ($row as $column) :?>
+    <td>
+        <?php echo $column;?>
+    </td>    
+    <?php endforeach; ?>
 </tr>
+<?php endforeach; ?>
 </table>
 
 </body>

@@ -80,7 +80,7 @@ class ireport_model extends CI_Model
             return true;
         }
         
-        public function view_reports($username,$criteria,$value) {
+        public function view_reports($username,$category,$severity,$reportID) {
             //Create database and ensure you have data
             // Write a look to retrieve all the data
             // Play with different search criteria - SQL queries ?
@@ -91,16 +91,19 @@ class ireport_model extends CI_Model
             //echo $criteria."\n";
             //echo $value;
        
-            if($criteria == "category") {
-                $query = $this->db->get_where('report_table', array('category' => $value));
+            if(!empty($reportID)) {
+		$array['reportID'] = $reportID;
+	    }
+            if (!empty($severity)) {
+		$array['severity'] = $severity;
+	    }
+            if (!empty($category)) {
+		$array['category'] = $category;
             }
-            elseif ($criteria == "severity") {
-                $query = $this->db->get_where('report_table', array('severity' => $value));
+	    if (!empty($username)) {
+		$array['username'] = $username;
             }
-            elseif ($criteria == "gps") {
-                $query = $this->db->get_where('report_table', array('gps' => $value));
-            }
-       
+	    $query = $this->db->get_where('report_table', $array);
             return $query->result_array();
         }
    

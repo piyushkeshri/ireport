@@ -44,8 +44,8 @@
       echo form_dropdown('criteria', $options);
 -->
   <p>
-    <?php echo "Value";?>
-    <?php echo form_input('value');?>
+    <?php echo "Report ID";?>
+    <?php echo form_input('reportID');?>
   </p>
   
 <!--  <p>
