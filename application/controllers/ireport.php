@@ -42,7 +42,8 @@ class ireport extends CI_Controller {
 		//                      gps is automatic
 		//                      Rest else comes from the form
 		
-		// Create an entry into Status ID table, if not successful, return error
+		// Create an entry into the report table
+		// Using report ID, then create an entry into Status ID table, if not successful, return error
 		// Get the SID returned from Status ID table and now update the Report ID entry
 		// If successful, display the Report ID to user
 		
@@ -52,48 +53,62 @@ class ireport extends CI_Controller {
 		//Kar	redirect('login/');
 		//Kar}
 		
-		$this->form_validation->set_rules('userfile', 'File Path', 'required');
 		$this->form_validation->set_rules('title', 'Title for the Report', 'required');
-
+		//$this->form_validation->set_rules('userfile', 'File Path', 'required');
+		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('ireport_upload_form');
+			$this->load->view('ireport_upload_form', array('error' => ' ' ));
+			return;
 		}
 		
-		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '0';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
-                
-		$this->load->library('upload', $config);
-		if ( ! $this->upload->do_upload())
-		{
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('ireport_upload_form', $error);
-		}
-		
-		$severity = $_POST['severity'];
-		$category = $_POST['category'];
-		$title    = $_POST['title'];
-		$data = array('upload_data' => $this->upload->data());
-		$reportID = $this->ireport_model->upload_report($this->upload->data(),$severity,$category,$title);
-		
-		if ($reportID < 0)
-			$this->load->view('ireport_upload_form');
 		else
 		{
-			$desc = "Report Created";
-			$statusID = $this->ireport_model->upload_status($reportID, $desc);
-			if ($statusID < 0)
-				$this->load->view('ireport_upload_form');
-			else
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '0';
+			$config['max_width']  = '0';
+			$config['max_height']  = '0';
+                
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload())
 			{
-				$this->ireport_model->update_report($reportID,$statusID);
-				echo "Report Succesfully Done with Report ID:";
-				echo $reportID;
+				$data['msg'] = array('error' => $this->upload->display_errors());
+				$this->load->view('ireport_kar_home', $data);
+				return;
 			}
+		
+			$severity = $_POST['severity'];
+			$category = $_POST['category'];
+			$title    = $_POST['title'];
+			$pic_data = array('upload_data' => $this->upload->data());
+			
+			$reportID = $this->ireport_model->upload_report($this->upload->data(),$severity,$category,$title);
+		
+			if ($reportID < 0)
+			{
+				$data['msg'] = array('Report could not be created');
+				$this->load->view('ireport_kar_home', $data);
+				return;
+			}
+			
+			$desc = "Report Created";
+			$prog = "New";
+			$statusID = $this->ireport_model->upload_status($reportID, $desc, $prog);
+			
+			if ($statusID < 0)
+			{
+				$data['msg'] = array('Report was successfully created, but Status entry could not be created');
+				$this->load->view('ireport_kar_home', $data);
+				return;
+			}
+			
+			$this->ireport_model->update_report($reportID,$statusID);
+			$data['msg'] = array('Report Succesfully Created with Report ID:' , $reportID);
+			$this->load->view('ireport_kar_home', $data);
+			
 		}
+		return;
 	}
 	
 	// Function used by dept admin to update status with progree
@@ -115,27 +130,35 @@ class ireport extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('ireport_update_status_form');
+			$this->load->view('ireport_update_status_form', array('error' => ' ' ));
+			return;
 		}
 		
 		$reportID = $_POST['reportID'];
 		$desc = $_POST['desc'];
+		$prog = $_POST['prog'];
 		
 		if (!$this->ireport_model->validate_reportID($reportID))
 		{
 			echo "Invalid Report ID";
 			$this->load->view('ireport_update_status_form');
+			return;
 		}
 		
-		$statusID = $this->ireport_model->upload_status($reportID, $desc);
+		$statusID = $this->ireport_model->upload_status($reportID, $desc, $prog);
+		
 		if ($statusID < 0)
-			$this->load->view('ireport_update_status_form');
-		else
 		{
-			$this->ireport_model->update_report($reportID,$statusID);
-			echo "Report Succesfully Done with Status ID:";
-			echo $statusID;
+			$data['msg'] = array('Status Update had returned unsuccessfully from the database');
+			$this->load->view('ireport_kar_home', $data);
+			return;
 		}
+		
+		$this->ireport_model->update_report($reportID,$statusID);
+		
+		$data['msg'] = array('Report Succesfully Updated with Status ID:', $statusID);
+		$this->load->view('ireport_kar_home', $data);
+		return;
 	}
 	
 	// Function used by user to delete a report entry
@@ -145,7 +168,7 @@ class ireport extends CI_Controller {
 	{
 		// Check if logged in, else redirect to login page
 		// If report id not exist, report Error
-		// Else, make the latestSID to be negative
+		// Else, make the latestSID to be negative -1
 	}
         
 	// Function used by user to upvote or downvote
@@ -173,8 +196,10 @@ class ireport extends CI_Controller {
 		//	'old_last_login' => $user->last_login
 		//);
 		//$username = $this->session->userdata('session_id');	//Assume this is the username for timebeing. Later this would be replaced with above data.
-		$username = "vvgupta";
+		//$username = "vvgupta";
 		//echo $session_id;
+
+		$username = $this->input->post('username');
 		$category = $this->input->post('category');
 		$severity = $this->input->post('severity');
 		$reportID = $this->input->post('reportID');
@@ -189,8 +214,10 @@ class ireport extends CI_Controller {
 			}
 		}
 		
+
 		//if($this->ion_auth->logged_in()) {
 		//	if($this->input->post('identity')) {
+               
 		$data['dummy'] = $this->ireport_model->view_reports($username,$category,$severity,$reportID);
 		//print_r($data);
 		if(empty($data['dummy'])) {
