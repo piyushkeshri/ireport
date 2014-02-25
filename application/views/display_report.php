@@ -8,28 +8,28 @@
    <p><?php //echo form_submit('submit', 'Logout');?></p>
 <?php //echo form_close();?>
 
-
-
 <h3>Viewing The table below!</h3>
-<?php //print_r ($dummy); ?>
 
 <table border=1>
 <tr>
-   <th>ReportID</th>
-   <th>UserName</th>
-   <th>GPS Location</th>
-   <th>Latest Status</th>
-   <th>Category</th>
-   <th>Date of Creation</th>
-   <th>Severity</th>
-   <th>Link to Image<th>
+<?php $array_keys = array_keys($dummy[0]);
+      foreach ($array_keys as $element) : ?>
+      <th>
+         <?php echo $element; ?>
+      </th>
+      <?php endforeach; ?>
 </tr>
 
 <?php foreach ($dummy as $row) :?>
 <tr>
-    <?php foreach ($row as $column) :?>
+    <?php foreach ($row as $key => $column) :?>
     <td>
-        <?php echo $column;?>
+        <?php  if($key == "imagePath") {
+                  echo "<a href=\"".base_url()."uploads/".$column."\">$column</a>";
+               }else {
+                  echo $column;
+               }
+         ?>
     </td>    
     <?php endforeach; ?>
 </tr>

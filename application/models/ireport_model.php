@@ -89,23 +89,20 @@ class ireport_model extends CI_Model
             // Pretty Print the data
             // Coded by Vivek
        
-            //echo $username."\n";
-            //echo $criteria."\n";
-            //echo $value;
-       
+	    $array = array ();
             if(!empty($reportID)) {
 		$array['reportID'] = $reportID;
 	    }
-            if (!empty($severity)) {
+            if (!empty($severity) && $severity != "all") {
 		$array['severity'] = $severity;
 	    }
-            if (!empty($category)) {
+            if (!empty($category) && $category != "all") {
 		$array['category'] = $category;
             }
 	    if (!empty($username)) {
 		$array['username'] = $username;
             }
-	    $query = $this->db->get_where('report_table', $array);
+ 	    $query = $this->db->get_where('report_table', $array);
             return $query->result_array();
         }
    
