@@ -14,23 +14,50 @@
 <tr>
 <?php $array_keys = array_keys($dummy[0]);
       foreach ($array_keys as $element) : ?>
-      <th>
-         <?php echo $element; ?>
-      </th>
+         <?php
+            if($element != "username") { 
+               echo "<th>".$element."</th>";
+            }   
+         ?>
       <?php endforeach; ?>
 </tr>
 
 <?php foreach ($dummy as $row) :?>
 <tr>
     <?php foreach ($row as $key => $column) :?>
-    <td>
         <?php  if($key == "imagePath") {
-                  echo "<a href=\"".base_url()."uploads/".$column."\">$column</a>";
-               }else {
-                  echo $column;
+                  echo "<td><a href=\"".base_url()."uploads/".$column."\">$column</a></td>";
+               }elseif ($key == "username") {
+               } else {    
+                  echo "<td>".$column."</td>";
                }
          ?>
-    </td>    
+    <?php endforeach; ?>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<br><br>
+<h3>Viewing The table below with username just for testing purpose!</h3>
+<table border=1>
+<tr>
+<?php $array_keys = array_keys($dummy[0]);
+      foreach ($array_keys as $element) : ?>
+         <?php
+            echo "<th>".$element."</th>";   
+         ?>
+      <?php endforeach; ?>
+</tr>
+
+<?php foreach ($dummy as $row) :?>
+<tr>
+    <?php foreach ($row as $key => $column) :?>
+        <?php  if($key == "imagePath") {
+                  echo "<td><a href=\"".base_url()."uploads/".$column."\">$column</a></td>";
+               } else {    
+                  echo "<td>".$column."</td>";
+               }
+         ?>
     <?php endforeach; ?>
 </tr>
 <?php endforeach; ?>

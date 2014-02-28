@@ -88,7 +88,6 @@ class ireport_model extends CI_Model
             // Play with different search criteria - SQL queries ?
             // Pretty Print the data
             // Coded by Vivek
-       
 	    $array = array ();
             if(!empty($reportID)) {
 		$array['reportID'] = $reportID;
@@ -105,7 +104,6 @@ class ireport_model extends CI_Model
  	    $query = $this->db->get_where('report_table', $array);
             return $query->result_array();
         }
-   
 }
 
 ?>
