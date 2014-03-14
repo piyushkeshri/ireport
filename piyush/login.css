@@ -3,7 +3,7 @@ body {
   font-size: 12px
 }
 .main {
-  max-width: 320px;
+  max-width: 380px;
   margin: 0 auto;
 }
 .login-or {
@@ -79,4 +79,21 @@ ul.nav.nav-tabs {
 .panel-image.hide-panel-body ~ .panel-body {
 	height: 0px;
 	padding: 0px;
+}
+
+.report, .search, .vote {
+  padding-bottom: 10px;
+  padding-top: 10px
+}
+
+.report:active a, .report:focus a, .report:hover a, .search:active a, .search:focus a, .search:hover a, .vote:active a, .vote:focus a, .vote:hover a {
+  background-color: #Fc6F51;
+  border: 2px solid #A4321A
+}
+a, a:active, a:visited {
+  text-decoration: none; 
+  outline: medium none; 
+  -webkit-transition: all 0.5s ease-in-out 0s; 
+  -ms-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s
 }

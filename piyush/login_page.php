@@ -12,6 +12,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="{$img_ps_dir}favicon.ico?{$img_update_time}" />
         
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="login.css" rel="stylesheet" type="text/css"/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
@@ -139,5 +140,20 @@
     </div>
 </div>
 
+<div class="container">
+  <div class="row col-xs-12">
+    <div class="main">
+      <div class="row col-xs-12 col-sm-12 col-md-12 report">
+        <a href="#" class="btn btn-lg btn-info btn-primary btn-block">Report</a>
+      </div>
+      <div class="row col-xs-12 col-sm-12 col-md-12 search">
+        <a href="#" class="btn btn-lg btn-info btn-primary btn-block"><i class="fa fa-search "></i>Search</a>
+      </div>
+      <div class="row col-xs-12 col-sm-12 col-md-12 vote">
+        <a href="#" class="btn btn-lg btn-info btn-primary btn-block">Vote</a>
+      </div>
+    </div>
+  </div>
+</div>
     </body>
 </html>
