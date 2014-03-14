@@ -25,9 +25,9 @@ class ireport extends CI_Controller {
 		//Kar	redirect('login/');
 		//Kar}
 		
-		//$this->load->view('ireport_upload_form', array('error' => ' ' ));
+		$this->load->view('ireport_upload_form', array('error' => ' ' ));
 		//$this->load->view('ireport_update_status_form', array('error' => ' '));
-		$this->load->view('ireport_search_report_form', array('error' => ' ')); 
+		//$this->load->view('ireport_search_report_form', array('error' => ' ')); 
 	}
 	
 	// Function used to upload a report by the user

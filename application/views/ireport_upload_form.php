@@ -1,6 +1,33 @@
 <html>
 <head>
 <title>Upload Form</title>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script>
+        function getLocation() {
+          // Try HTML5 geolocation
+          alert("Muhaha");
+          if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                      var pos = new google.maps.LatLng(position.coords.latitude,
+                                                       position.coords.longitude);
+
+                    }, function() {
+                      handleNoGeolocation(true);
+                });
+          } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+          }
+        }
+
+        function handleNoGeolocation(errorFlag) {
+          //if (errorFlag) {
+          //  var content = 'Error: The Geolocation service failed.';
+          //} else {
+          //  var content = 'Error: Your browser doesn\'t support geolocation.';
+          //}
+        };
+</script>
 </head>
 <body>
 
@@ -28,7 +55,9 @@
                                     <option value="garbage">Garbage</option>
                             </select>
                             <br />
-
+                            
+                <!-button onclick="getLocation()">Get GPS<!-/button>
+                
                 * fields are compulsory
                 <br/>
                 <br/>
