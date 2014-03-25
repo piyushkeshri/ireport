@@ -1,0 +1,99 @@
+body {
+  padding-top: 15px;
+  font-size: 12px
+}
+.main {
+  max-width: 380px;
+  margin: 0 auto;
+}
+.login-or {
+  position: relative;
+  font-size: 18px;
+  color: #aaa;
+  margin-top: 10px;
+          margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.span-or {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  margin-left: -25px;
+  background-color: #fff;
+  width: 50px;
+  text-align: center;
+}
+.hr-or {
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+h3 {
+  text-align: center;
+  line-height: 300%;
+}
+.forget_password {
+  padding-bottom: 10px;
+  padding-top: 10px
+}
+.forget_remember_block {
+  padding-left: 30px
+}
+.nav-tabs>li>a {
+  font-size: 18px;
+  margin-right: 0
+}
+.nav-tabs>li {
+  padding: 0
+}
+ul.nav.nav-tabs {
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+@import url("http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+.panel-image img.panel-image-preview {
+    width: 100%;
+	border-radius: 4px 4px 0px 0px;
+}
+
+.panel-heading ~ .panel-image img.panel-image-preview {
+	border-radius: 0px;
+}
+
+.panel-image ~ .panel-body, .panel-image.hide-panel-body ~ .panel-body {
+	overflow: hidden;
+}
+.panel-image ~ .panel-footer a {
+	padding: 0px 10px;
+	font-size: 1.3em;
+	color: rgb(100, 100, 100);
+}
+
+.panel-image.hide-panel-body ~ .panel-body {
+	height: 0px;
+	padding: 0px;
+}
+
+.report, .search, .vote {
+  padding-bottom: 10px;
+  padding-top: 10px
+}
+
+.report:active a, .report:focus a, .report:hover a, .search:active a, .search:focus a, .search:hover a, .vote:active a, .vote:focus a, .vote:hover a {
+  background-color: #Fc6F51;
+  border: 2px solid #A4321A
+}
+a, a:active, a:visited {
+  text-decoration: none; 
+  outline: medium none; 
+  -webkit-transition: all 0.5s ease-in-out 0s; 
+  -ms-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s
+}

@@ -10,6 +10,7 @@ class ireport extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->library('ion_auth');
 		$this->load->model('ireport_model');
+		$this->load->helper('html');
 		$this->load->database();
 	}
 
@@ -18,19 +19,32 @@ class ireport extends CI_Controller {
 	function index()
 	{
 		// Check if already logged in, else redirect to login page
-		// If logged in, then display user home page [ Search Button to search/ Upload Button to Upload Report/ (Optional:hot trends)]
+		// If logged in, then display user home page [ Search Button to search/ create Button to create Report/ (Optional:hot trends)]
 		
 		//Karif (!$this->ion_auth->logged_in())
 		//Kar{
 		//Kar	redirect('login/');
 		//Kar}
-		
-		//$this->load->view('ireport_upload_form', array('error' => ' ' ));
-		//$this->load->view('ireport_update_status_form', array('error' => ' '));
-		$this->load->view('ireport_search_report_form', array('error' => ' ')); 
+		$this->load->view('home_page');
 	}
 	
-	// Function used to upload a report by the user
+	function view_create_form()
+	{
+		$this->load->view('ireport_create_form', array('error' => ' ' ));
+	}
+	
+	function view_update_form()
+	{
+		$this->load->view('ireport_update_status_form', array('error' => ' '));
+	}
+	
+	function view_search_form()
+	{
+		$this->load->view('ireport_search_report_form', array('error' => ' '));
+	}
+	
+	
+	// Function used to create a report by the user
 	// Coded by Karthika
 	// username has to be inputted
 	function create_report()
@@ -58,7 +72,7 @@ class ireport extends CI_Controller {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('ireport_upload_form', array('error' => ' ' ));
+			$this->load->view('ireport_create_form', array('error' => ' ' ));
 			return;
 		}
 		
@@ -83,7 +97,7 @@ class ireport extends CI_Controller {
 			$title    = $_POST['title'];
 			$pic_data = array('upload_data' => $this->upload->data());
 			
-			$reportID = $this->ireport_model->upload_report($this->upload->data(),$severity,$category,$title);
+			$reportID = $this->ireport_model->create_report($this->upload->data(),$severity,$category,$title);
 		
 			if ($reportID < 0)
 			{
@@ -94,7 +108,7 @@ class ireport extends CI_Controller {
 			
 			$desc = "Report Created";
 			$prog = "New";
-			$statusID = $this->ireport_model->upload_status($reportID, $desc, $prog);
+			$statusID = $this->ireport_model->create_status($reportID, $desc, $prog);
 			
 			if ($statusID < 0)
 			{
@@ -145,7 +159,7 @@ class ireport extends CI_Controller {
 			return;
 		}
 		
-		$statusID = $this->ireport_model->upload_status($reportID, $desc, $prog);
+		$statusID = $this->ireport_model->create_status($reportID, $desc, $prog);
 		
 		if ($statusID < 0)
 		{

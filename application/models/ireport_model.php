@@ -11,7 +11,7 @@
 class ireport_model extends CI_Model
 {
 
-	public function upload_report($upload_data, $severity, $category, $title)
+	public function create_report($upload_data, $severity, $category, $title)
 	{
             
 		foreach ($upload_data as $item => $value):
@@ -40,7 +40,7 @@ class ireport_model extends CI_Model
                 return $this->db->insert_id();                
 	}
         
-        public function upload_status($reportID, $desc, $prog)
+        public function create_status($reportID, $desc, $prog)
 	{            
 		$data = array(
                         'reportID' => $reportID,

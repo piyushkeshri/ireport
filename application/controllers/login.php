@@ -228,6 +228,7 @@ class Login extends CI_Controller {
 		}
 		else
 		{
+			
 			// get identity for that email
 			$identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
 			if(empty($identity)) {
