@@ -5,47 +5,26 @@
 <!-- <script type="text/javascript" src='<?php //echo base_url()?>assets/js/table.js'> -->
 <script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script>
-        $(document).ready(function()  { 
+/*    Coded by Vivek;
+ *    Code below is to run a jquery on the input tabs at the header of each table.
+ *    It expects the input box to have id like "search0", "search1", etc.
+ *    Also, it expects the id of the table to be "table"
+ *    Also, it expects the id of all rows in the table to be like "row1","row2","row3", etc.
+ *
+ *    $(document).ready(function()  { 
         var $rows = $('#table tr[id^=row]');
-        //console.log($rows);
-        //var col_len = $rows.first().children("td").length;
-        //console.log(col_len);
          $("input[id^=search]").keyup(function() {
                 var id = $(this).attr('id');
                 i = id.match(/search(\d)/)[1];
-                //console.log(i);
-                //console.log("i="+i);
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-                //console.log(val);
                 $rows.show().filter(function() {
                     var col = $(this).children("td")[i];
                     var text = $(col).text().replace(/\s+/g,' ').toLowerCase();
-                    //console.log(!~text.indexOf(val));
                     return !~text.indexOf(val);
                 }).hide();
             });
         });
-            //console.log(val);
-            //console.log("done with val");
-                //console.log("text to be checked is ");
-                //console.log($(this).text());
-                //console.log($(this).children("td").);
-                //console.log($(cols)[0].text());
-                //$.each($(this).children("td"), function (index, column) {
-                //  var $column = $(column);
-                //  console.log(index);
-                //});
-                //console.log("starting with new row\n");
-                //var temp = 0;
-                //  if (index == 0) {
-                //  var text = $(column).text().replace(/\s+/g, ' ').toLowerCase();
-                //    //console.log(!~text.indexOf(val));
-                //    return !~text.indexOf(val);
-                //  }
-                //});
-                
-                //console.log("result is ");
-                //console.log(!~text.indexOf(val));
+*/        
 </script>
 <body>
 
@@ -57,7 +36,11 @@
 
 <h3>Viewing The table below!</h3>
 
-   
+
+
+<!--
+   Coded by Vivek;
+   The code below is to print the data in tabular format.    
 <table border=1 id="table">
 <tr>
 <?php $array_keys = array_keys($dummy[0]);
@@ -116,7 +99,7 @@
 </tr>
 <?php endforeach; ?>
 </table>
-
+-->
 <!-- <button type="button" onclick="myFunction()">Try it</button> -->
 </body>
 
