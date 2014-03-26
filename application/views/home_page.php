@@ -31,6 +31,12 @@
               </div>
               <div class="row col-xs-12 col-sm-12 col-md-12 update">
                 <a href="<?php echo site_url('ireport/view_update_form'); ?>" class="btn btn-lg btn-info btn-primary btn-block">Update</a>
+              <br/>
+              <br/>
+              <br/>
+              </div>
+              <div class="row col-xs-12 col-sm-12 col-md-12 logout">
+                <a href="<?php echo site_url('ireport/logout'); ?>" class="btn btn-lg btn-info btn-primary btn-block">Logout</a>
               </div>
             </div>
           </div>

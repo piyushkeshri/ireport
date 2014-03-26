@@ -29,6 +29,8 @@
         <li class="col-xs-6"><a href="#signup" data-toggle="tab">Sign Up</a></li>
       </ul>
 
+      <div id="infoMessage"><?php echo $message;?></div>
+      
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane active in row" id="login">
           <h3>Please Log In</a></h3>
@@ -45,19 +47,20 @@
         <span class="span-or">or</span>
       </div>
 
-      <form role="form" id="login_form" action="post">
+      <?php  echo form_open('ireport/user_login', array('role'=>'form')); ?>
+      <!--form role="form" id="login_form" action="http://localhost/ireport/index.php/ireport/user_login"-->
         <div class="form-group">
           <label for="inputUsernameEmail" class="sr-only">Username or email</label>
-          <input type="text" class="form-control input-lg" id="inputUsernameEmail" placeholder="Enter Email Address ...">
+          <input type="text" class="form-control input-lg" name="inputUsernameEmail" placeholder="Enter Email Address ...">
         </div>
         <div class="form-group">
           <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" class="form-control input-lg" id="inputPassword" placeholder="Enter Password ...">
+          <input type="password" class="form-control input-lg" name="inputPassword" placeholder="Enter Password ...">
         </div>
         <div class="row forget_remember_block">
           <div class="col-xs-6 checkbox">
             <label>
-              <input type="checkbox">
+              <input type="checkbox" name="remember">
               Remember me </label>
           </div>
           <div class="col-xs-6 forget_password pull-right">
@@ -67,8 +70,8 @@
         <button type="submit" class="btn btn btn-block btn-lg btn-primary">
           Log In
         </button>
-      </form>
-    
+      <!--/form-->
+      <?php  echo form_close(); ?>
     </div>
 
     <div class="tab-pane fade row" id="signup">
@@ -86,18 +89,27 @@
         <span class="span-or">or</span>
       </div>
       
-      <form id="signup_account" action="post">
+      <?php  echo form_open('ireport/register', array('role'=>'form')); ?>
+      <!--form id="signup_account" method="post" action="http://localhost/ireport/index.php/ireport/register"-->
         <div class="form-group">
-          <label for="inputUsernameEmail" class="sr-only">Username or email</label>
-          <input type="text" class="form-control input-lg" id="inputUsernameEmail" placeholder="Enter Email Address ...">
+          <label for="first_name" class="sr-only">First Name</label>
+          <input type="text" class="form-control input-lg" name="first_name" placeholder="Enter First Name ...">
+        </div>
+        <div class="form-group">
+          <label for="last_name" class="sr-only">Last Name</label>
+          <input type="text" class="form-control input-lg" name="last_name" placeholder="Enter Last Name ...">
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="sr-only">Email</label>
+          <input type="text" class="form-control input-lg" name="inputEmail" placeholder="Enter Email Address ...">
         </div>
         <div class="form-group">
           <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" class="form-control input-lg" id="inputPassword" placeholder="Enter Password ...">
+          <input type="password" class="form-control input-lg" name="inputPassword" placeholder="Enter Password ...">
         </div>
         <div class="form-group">
           <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
-          <input type="password" class="form-control input-lg" id="inputConfirmPassword" placeholder="Confirm Password ...">
+          <input type="password" class="form-control input-lg" name="inputConfirmPassword" placeholder="Confirm Password ...">
         </div>
 <!--        <label>Email</label>
         <input type="text" value="" class="input-xlarge form-control">
@@ -106,9 +118,10 @@
 
         <div>
           <br>
-          <button class="btn btn-block btn-lg btn-primary">Create Account</button>
+          <button type="submit" class="btn btn-block btn-lg btn-primary">Create Account</button>
         </div>
-      </form>
+      <!--/form-->
+      <?php  echo form_close(); ?>
     </div>
 
     </div> 
@@ -117,27 +130,7 @@
   </div>
 </div>
 
-<div class="container" style="margin-top:10px;">
-    <div class="row col-xs-12 form-group" style="max-width: 320px;margin: 0 auto;">
-    <div class="col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-image hide-panel-body">
-                <img src="http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52cf9489095e8_1.JPG" class="panel-image-preview" />
-            </div>
-            <div class="panel-body">
-                <h4>Title of Image</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in lobortis nisl, vitae iaculis sapien. Phasellus ultrices gravida massa luctus ornare. Suspendisse blandit quam elit, eu imperdiet neque semper et.</p>
-            </div>
-            <div class="panel-footer text-center">
-                <a href="#download"><span class="glyphicon glyphicon-download"></span></a>
-                <!--<a href="#facebook"><span class="fa fa-facebook"></span></a>
-                <a href="#twitter"><span class="fa fa-twitter"></span></a>-->
-                <a href="#share"><span class="glyphicon glyphicon-share-alt"></span></a>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
+
 
     </body>
 </html>

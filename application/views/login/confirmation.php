@@ -1,1 +1,0 @@
-<p> Activation Code has been mailed to you! </p>
