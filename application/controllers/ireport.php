@@ -43,8 +43,8 @@ class ireport extends CI_Controller {
 		$this->data['title'] = "Login";
                 
 		//validate form input
-		$this->form_validation->set_rules('inputUsernameEmail', 'Username', 'required|valid_email');
-		$this->form_validation->set_rules('inputPassword', 'Password', 'required|min_length[6]');
+		$this->form_validation->set_rules('inputUsernameEmail', 'Username', 'trim|xss_clean|required|valid_email');
+		$this->form_validation->set_rules('inputPassword', 'Password', 'trim|xss_clean|required');
 
 		
 		if ($this->form_validation->run() == true)
@@ -73,8 +73,7 @@ class ireport extends CI_Controller {
 		{
 			//the user is not logging in so display the login page
 			//set the flash data error message if there is one
-			//$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-			$this->data['message'] = "Useless";	
+			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 			$this->data['username'] = array('name' => 'username',
 				'id' => 'username',
 				'type' => 'text',
@@ -121,6 +120,8 @@ class ireport extends CI_Controller {
 		$this->form_validation->set_rules('inputEmail', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('inputPassword', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[inputConfirmPassword]');
 		$this->form_validation->set_rules('inputConfirmPassword', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+		$this->form_validation->set_message('is_unique','This %s Already Exists!');
+		$this->form_validation->set_message('required','Valid %s is Required!');
 	
 		
 		if ($this->form_validation->run() == true)
