@@ -110,7 +110,8 @@ CREATE TABLE `report_table` (
 	  `category` VARCHAR(128)NOT NULL,
         `initDate` TIMESTAMP DEFAULT NOW(),
 	  `severity` TINYINT DEFAULT 1,
-        `imagePath` TEXT
+        `imagePath` TEXT,
+        `votes` INT
 	);
 
 
@@ -128,3 +129,14 @@ CREATE TABLE `status_table` (
         `progress` TEXT NOT NULL
 	);
 
+
+DROP TABLE IF EXISTS `vote_table`;
+
+#
+# Table structure for Voting Count of Reports;
+#
+
+CREATE TABLE `vote_table` (
+	   `reportID` INT PRIMARY KEY,
+	   `userID` VARCHAR(128)NOT NULL
+	);

@@ -21,7 +21,7 @@ class ireport_model extends CI_Model
                 $gps = 100;
                 $latestSID = 0;
                 $userID = "karthipd";
-                
+                $votes = 0;
     
                 $data = array(
                         'username' => $userID,
@@ -30,7 +30,8 @@ class ireport_model extends CI_Model
                         'latestSID' => $latestSID,
                         'category' => $category,
                 	'severity' => $severity,
-                	'imagePath' => $title
+                	'imagePath' => $title,
+			'votes' => $votes
                 );
 
 	        if(!($this->db->insert('report_table', $data)))
@@ -104,6 +105,44 @@ class ireport_model extends CI_Model
  	    $query = $this->db->get_where('report_table', $array);
             return $query->result_array();
         }
+	
+	public function vote_reports($userID, $reportID)
+	{
+		$query = $this->db->get_where('vote_table', array('reportID' => $reportID));
+		
+		if ($query == NULL)
+		   return false;
+            
+		foreach ($query->row_array() as $item => $value):
+		   if ($item == "userID")
+			{if ($value == $userID) return false;}
+		endforeach;
+		
+		$data = array(
+                        'reportID' => $reportID,
+                        'userID' => $userID
+                );
+
+	        if(!($this->db->insert('vote_table', $data)))
+                   { echo "Insertion error into Status Table";
+                     return false;
+                   }
+		
+		$query = $this->db->get_where('report_table', array('reportID' => $reportID));
+		foreach ($query->row_array() as $item => $value):
+		   if ($item == "votes") {$votes = $value;}
+		endforeach;
+		$votes = $votes + 1;
+		
+		$data = array(
+                  'votes' => $votes
+                );
+
+                $this->db->where('reportID', $reportID);
+                $this->db->update('report_table', $data);
+                return true;    
+  
+	}
 }
 
 ?>
