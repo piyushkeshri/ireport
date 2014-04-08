@@ -30,6 +30,19 @@
             //empty string means no validation error
             }
         </script>
+        <script>
+            // Javascript to enable link to tab
+            var hash = document.location.hash;
+            var prefix = "tab_";
+            if (hash) {
+                $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+            } 
+            
+            // Change hash for page-reload
+            $('.nav-tabs a').on('shown.bs.tab', function (e) {
+                window.location.hash = e.target.hash.replace("#", "#" + prefix);
+            });
+        </script>
     </head>
     <body>
 
@@ -44,7 +57,7 @@
         <li class="col-xs-6"><a href="#signup" data-toggle="tab">Sign Up</a></li>
       </ul>
 
-      <div id="infoMessage"><?php echo $message;?></div>
+      <div id="infoMessage"><?php //echo $message;?></div>
       
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane active in row" id="login">
@@ -62,17 +75,17 @@
         <span class="span-or">or</span>
       </div>
 
-      <?php  echo form_open('ireport/user_login', array('role'=>'form')); ?>
+      <?php  echo form_open('ireport/user_login#login', array('role'=>'form')); ?>
       <!--form role="form" id="login_form" action="http://localhost/ireport/index.php/ireport/user_login"-->
         <div class="form-group">
           <label for="inputUsernameEmail" class="sr-only">Username or email</label>
           <input type="text" class="form-control input-lg" name="inputUsernameEmail" required placeholder="Enter Email Address ...">
-            <p><?php echo form_error('inputUsernameEmail'); ?></p>
+            <p class="text-danger"><?php echo form_error('inputUsernameEmail'); ?></p>
         </div>
         <div class="form-group">
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" class="form-control input-lg" name="inputPassword" required pattern=".{6,30}" placeholder="Enter Password ...">
-            <p><?php echo form_error('inputPassword'); ?></p>
+            <p class="text-danger"><?php echo form_error('inputPassword'); ?></p>
         </div>
         <div class="row forget_remember_block">
           <div class="col-xs-6 checkbox">
@@ -106,32 +119,32 @@
         <span class="span-or">or</span>
       </div>
       
-      <?php  echo form_open('ireport/register', array('role'=>'form')); ?>
+      <?php  echo form_open('ireport/register#signupform', array('role'=>'form','id'=>'signupform')); ?>
       <!--form id="signup_account" method="post" action="http://localhost/ireport/index.php/ireport/register"-->
-        <div class="form-group">
+        <div class="form-group <?php if(form_error('first_name')) { echo "has-error"; } ?>">
           <label for="first_name" class="sr-only">First Name</label>
           <input type="text" class="form-control input-lg" required pattern=".{1,20}" name="first_name" placeholder="Enter First Name ...">
-            <p><?php echo form_error('first_name'); ?></p>
+            <p class="text-danger"><?php echo form_error('first_name'); ?></p>
         </div>
-        <div class="form-group">
+        <div class="form-group <?php if(form_error('last_name')) { echo "has-error"; } ?>">
           <label for="last_name" class="sr-only">Last Name</label>
           <input type="text" class="form-control input-lg" name="last_name" pattern=".{,20}" placeholder="Enter Last Name ...">
-            <p><?php echo form_error('last_name'); ?></p>
+            <p class="text-danger"><?php echo form_error('last_name'); ?></p>
         </div>
         <div class="form-group">
           <label for="inputEmail" class="sr-only">Email</label>
           <input type="email" class="form-control input-lg" name="inputEmail" required placeholder="Enter Email Address ...">
-            <p><?php echo form_error('inputEmail'); ?></p>
+            <p class="text-danger"><?php echo form_error('inputEmail'); ?></p>
         </div>
         <div class="form-group">
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" class="form-control input-lg" name="inputPassword" id="inputPassword" required pattern=".{6,30}" placeholder="Enter Password ...">
-            <p><?php echo form_error('inputPassword'); ?></p>
+            <p class="text-danger"><?php echo form_error('inputPassword'); ?></p>
         </div>
         <div class="form-group">
           <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
           <input type="password" class="form-control input-lg" name="inputConfirmPassword" id="inputConfirmPassword" required pattern=".{6,30}" placeholder="Confirm Password ...">
-          <p><?php echo form_error('inputConfirmPassword'); ?></p>
+          <p class="text-danger"><?php echo form_error('inputConfirmPassword'); ?></p>
         </div>
 <!--        <label>Email</label>
         <input type="text" value="" class="input-xlarge form-control">
@@ -151,7 +164,6 @@
 
   </div>
 </div>
-
 
 
     </body>

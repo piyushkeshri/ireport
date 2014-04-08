@@ -15,6 +15,7 @@ class ireport extends CI_Controller {
 
 		$this->load->library('ion_auth');
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
+		$this->form_validation->set_error_delimiters('<div class="error"><p class="text-danger">', '</p></div>');
 		$this->lang->load('auth');
 		$this->load->helper('language');
 	}

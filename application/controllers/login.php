@@ -12,7 +12,6 @@ class Login extends CI_Controller {
 		//$this->load->helper('url');
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
 		$this->lang->load('auth');
 		$this->load->helper('language');
 		
