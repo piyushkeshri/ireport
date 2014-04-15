@@ -93,3 +93,50 @@ CREATE TABLE `login_attempts` (
   `time` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS  `report_table`;
+
+#
+# Table structure for Reports Creation;
+#
+
+CREATE TABLE `report_table` (
+	  `reportID` INT AUTO_INCREMENT PRIMARY KEY,
+	  `username` VARCHAR(128)NOT NULL,
+       `title` TEXT,
+	  `gps` DOUBLE,
+	  `latestSID` BIGINT,
+	  `category` VARCHAR(128)NOT NULL,
+        `initDate` TIMESTAMP DEFAULT NOW(),
+	  `severity` TINYINT DEFAULT 1,
+        `imagePath` TEXT,
+        `votes` INT
+	);
+
+
+DROP TABLE IF EXISTS  `status_table`;
+
+#
+# Table structure for Status of Reports Creation;
+#
+
+CREATE TABLE `status_table` (
+	  `SID` INT AUTO_INCREMENT PRIMARY KEY,
+	  `reportID` INT,
+	  `description` TEXT NOT NULL,
+        `timeStamp` TIMESTAMP DEFAULT NOW(),
+        `progress` TEXT NOT NULL
+	);
+
+
+DROP TABLE IF EXISTS `vote_table`;
+
+#
+# Table structure for Voting Count of Reports;
+#
+
+CREATE TABLE `vote_table` (
+	   `reportID` INT PRIMARY KEY,
+	   `userID` VARCHAR(128)NOT NULL
+	);
