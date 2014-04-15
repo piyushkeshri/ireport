@@ -508,23 +508,6 @@ class ireport extends CI_Controller {
 		//	echo "This directs to homepage \n"; //$this->load->view('home'); 
 		//}
 	}
-    
-	function vote_issues()
-	{
-	    if (!$this->ion_auth->logged_in())
-	    {
-		//redirect them to the login page
-		redirect('ireport/user_login', 'refresh');
-	    }
-	    $reportID = $this->input->post('reportID');
-	    $userID = "crap"; //fixme
-	    if($this->ireport_model->vote_reports($userID, $reportID)) 
-	    {     // Vivek refresh your display with same criteria}
-	    }
-	    else 
-	    {    //display error message}
-	    }
-	}
 	
 	function vote_issues()
 	{

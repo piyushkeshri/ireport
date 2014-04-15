@@ -57,7 +57,7 @@
         <li class="<?php echo ($activeTab == "signup") ? "active" : ""; ?> col-xs-6"><a href="#signup" data-toggle="tab">Sign Up</a></li>
       </ul>
 
-      <div id="infoMessage"><?php echo $message; ?></div>
+      <div id="infoMessage"><?php //echo $message; ?></div>
       
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane <?php echo ($activeTab == "login") ? "active in" : "fade"; ?> row" id="login">
