@@ -508,8 +508,6 @@ class ireport extends CI_Controller {
 		//	echo "This directs to homepage \n"; //$this->load->view('home'); 
 		//}
 	}
-<<<<<<< HEAD
-
     
 	function vote_issues()
 	{
@@ -527,8 +525,6 @@ class ireport extends CI_Controller {
 	    {    //display error message}
 	    }
 	}
-
-=======
 	
 	function vote_issues()
 	{
@@ -546,6 +542,5 @@ class ireport extends CI_Controller {
 		{	//display error message}
 		}
 	}
->>>>>>> 3ed642e03024d1b41d74896895ab47e4e7edd1ac
 }
 ?>
