@@ -18,6 +18,7 @@ class ireport extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<div class="error"><p class="text-danger">', '</p></div>');
 		$this->lang->load('auth');
 		$this->load->helper('language');
+		$this->data['activeTab'] = "login";
 	}
 
 	// Default function in case no parameter is passed in the URL
@@ -31,6 +32,7 @@ class ireport extends CI_Controller {
 		{
 			//redirect them to the login page
 			$this->data['message'] = "";
+			$this->data['activeTab'] = "login";
 			$this->load->view('ireport_login', $this->data);
 			//redirect('ireport/user_login', 'refresh');
 		}
@@ -45,7 +47,7 @@ class ireport extends CI_Controller {
                 
 		//validate form input
 		$this->form_validation->set_rules('inputUsernameEmail', 'Username', 'trim|xss_clean|required|valid_email');
-		$this->form_validation->set_rules('inputPassword', 'Password', 'trim|xss_clean|required');
+		$this->form_validation->set_rules('inputLoginPassword', 'Password', 'trim|xss_clean|required');
 
 		
 		if ($this->form_validation->run() == true)
@@ -54,7 +56,7 @@ class ireport extends CI_Controller {
 			//check for "remember me"
 			$remember = (bool) $this->input->post('remember');
 
-			if ($this->ion_auth->login($this->input->post('inputUsernameEmail'), $this->input->post('inputPassword'), $remember))
+			if ($this->ion_auth->login($this->input->post('inputUsernameEmail'), $this->input->post('inputLoginPassword'), $remember))
 			{
 				//if the login is successful
 				//redirect them back to the home page
@@ -63,6 +65,7 @@ class ireport extends CI_Controller {
 			}
 			else
 			{
+				$this->data['activeTab'] = "login";
 				//if the login was un-successful
 				//redirect them back to the login page
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -84,6 +87,7 @@ class ireport extends CI_Controller {
 				'id' => 'password',
 				'type' => 'password',
 			);
+			$this->data['activeTab'] = "login";
 			$this->load->view('ireport_login', $this->data);
 		}
 	}
@@ -184,6 +188,7 @@ class ireport extends CI_Controller {
 				'type'  => 'password',
 				'value' => $this->form_validation->set_value('inputConfirmPassword'),
 			);
+			$this->data['activeTab'] = "signup";
                         $this->load->view('ireport_login', $this->data);
 		}
 
