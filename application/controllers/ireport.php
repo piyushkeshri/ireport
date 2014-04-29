@@ -59,6 +59,7 @@ class ireport extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				//$this->session->set_userdata('username',$this->input->post('inputUsernameEmail'));
 				$this->load->view('home_page');
 			}
 			else
@@ -512,7 +513,7 @@ class ireport extends CI_Controller {
 			redirect('ireport/user_login', 'refresh');
 		}
 		$reportID = $this->input->post('reportID');
-		$userID = "crap"; //fixme
+		$userID = $this->session->userdata('username');
 		if($this->ireport_model->vote_reports($userID, $reportID)) 
 		{	 // Vivek refresh your display with same criteria}
 		}
