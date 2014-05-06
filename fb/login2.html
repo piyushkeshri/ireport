@@ -9,8 +9,12 @@
     appId      : '693361157352079',
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
+    xfbml      : true,  // parse XFBML
+    oath       : true
   });
+
+
+  
 
   // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
   // for any authentication related change, such as login, logout or session refresh. This means that
@@ -24,6 +28,8 @@
       // have logged in to the app.
       testAPI();
     } else if (response.status === 'not_authorized') {
+
+
       // In this case, the person is logged into Facebook, but not into the app, so we call
       // FB.login() to prompt them to do so. 
       // In real-life usage, you wouldn't want to immediately prompt someone to login 
@@ -31,14 +37,37 @@
       // (1) JavaScript created popup windows are blocked by most browsers unless they 
       // result from direct interaction from people using the app (such as a mouse click)
       // (2) it is a bad experience to be continually prompted to login upon page load.
-      FB.login({scope: 'email,user_likes'});
+ FB.login(function(response) {
+   if (response.authResponse) {
+     console.log('Welcome!  Fetching opt1.... ');
+     FB.api('/me', function(response) {
+       console.log('Good to see you :) ' + response.name + '.');
+     });
+   } else {
+     console.log('User cancelled login or did not fully authorize.');
+   }
+ });
+
+
+     // FB.login({scope: 'email,user_likes'});
     } else {
       // In this case, the person is not logged into Facebook, so we call the login() 
       // function to prompt them to do so. Note that at this stage there is no indication
       // of whether they are logged into the app. If they aren't then they'll see the Login
       // dialog right after they log in to Facebook. 
       // The same caveats as above apply to the FB.login() call here.
-      FB.login({scope: 'email,user_likes'});
+
+       FB.login(function(response) {
+   if (response.authResponse) {
+     console.log('Welcome!  opt2... ');
+     FB.api('/me', function(response) {
+       console.log('AUthorized, Good to see you opt2, ' + response.name + '. - \n');
+     });
+   } else {
+     console.log('User cancelled login or did not fully authorize.');
+   }
+ });
+      //FB.login({scope: 'email,user_likes'});
     }
   });
   };
@@ -55,11 +84,26 @@
   // Here we run a very simple test of the Graph API after login is successful. 
   // This testAPI() function is only called in those cases. 
   function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
+    //console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + response.email +'.');
+
+      document.getElementById("FBemail").value = response.email;
+      console.log('OK to see you,' + response.name + " _ "+response.email +'.');
     });
   }
+
+  function FBlogin(){
+  FB.login(function(response) {
+   if (response.authResponse) {
+     console.log('Welcome!  Fetching opt1.... ');
+     FB.api('/me', function(response) {
+       console.log('Good to see you :) ' + response.name + '.');
+     });
+   } else {
+     console.log('User cancelled login or did not fully authorize.');
+   }
+ },{scope:'email,user_likes'})};
+
 </script>
 </head>
 <body>
@@ -76,7 +120,7 @@
     <div class="social-box">
       <div class="row mg-btm">
              <div class="col-md-12">
-                <a href="#" onclick="FB.login()" class="btn btn-primary btn-block">
+                <a href="#" onclick="FBlogin()" class="btn btn-primary btn-block">
                   <i class="icon-facebook"></i>   Login with Facebook
                 </a>
       </div>
@@ -93,6 +137,7 @@
         
     <input type="text" class="form-control" placeholder="Email" autofocus>
         <input type="password" class="form-control" placeholder="Password">
+   <input id="FBemail" type="text" class="form-control" placeholder="FB Email" autofocus>
      
         <!--Are you a business? <a href=""> Get started here</a> -->
     <span class="clearfix"></span>  

@@ -15,8 +15,10 @@ class ireport extends CI_Controller {
 
 		$this->load->library('ion_auth');
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
+		$this->form_validation->set_error_delimiters('<div class="error"><p class="text-danger">', '</p></div>');
 		$this->lang->load('auth');
 		$this->load->helper('language');
+		$this->data['activeTab'] = "login";
 	}
 
 	// Default function in case no parameter is passed in the URL
@@ -30,6 +32,7 @@ class ireport extends CI_Controller {
 		{
 			//redirect them to the login page
 			$this->data['message'] = "";
+			$this->data['activeTab'] = "login";
 			$this->load->view('ireport_login', $this->data);
 			//redirect('ireport/user_login', 'refresh');
 		}
@@ -43,8 +46,8 @@ class ireport extends CI_Controller {
 		$this->data['title'] = "Login";
                 
 		//validate form input
-		$this->form_validation->set_rules('inputUsernameEmail', 'Username', 'required|valid_email');
-		$this->form_validation->set_rules('inputPassword', 'Password', 'required|min_length[6]');
+		$this->form_validation->set_rules('inputUsernameEmail', 'Username', 'trim|xss_clean|required|valid_email');
+		$this->form_validation->set_rules('inputLoginPassword', 'Password', 'trim|xss_clean|required');
 
 		
 		if ($this->form_validation->run() == true)
@@ -53,15 +56,17 @@ class ireport extends CI_Controller {
 			//check for "remember me"
 			$remember = (bool) $this->input->post('remember');
 
-			if ($this->ion_auth->login($this->input->post('inputUsernameEmail'), $this->input->post('inputPassword'), $remember))
+			if ($this->ion_auth->login($this->input->post('inputUsernameEmail'), $this->input->post('inputLoginPassword'), $remember))
 			{
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				//$this->session->set_userdata('username',$this->input->post('inputUsernameEmail'));
 				$this->load->view('home_page');
 			}
 			else
 			{
+				$this->data['activeTab'] = "login";
 				//if the login was un-successful
 				//redirect them back to the login page
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -73,8 +78,7 @@ class ireport extends CI_Controller {
 		{
 			//the user is not logging in so display the login page
 			//set the flash data error message if there is one
-			//$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-			$this->data['message'] = "Useless";	
+			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 			$this->data['username'] = array('name' => 'username',
 				'id' => 'username',
 				'type' => 'text',
@@ -84,6 +88,7 @@ class ireport extends CI_Controller {
 				'id' => 'password',
 				'type' => 'password',
 			);
+			$this->data['activeTab'] = "login";
 			$this->load->view('ireport_login', $this->data);
 		}
 	}
@@ -121,6 +126,8 @@ class ireport extends CI_Controller {
 		$this->form_validation->set_rules('inputEmail', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('inputPassword', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[inputConfirmPassword]');
 		$this->form_validation->set_rules('inputConfirmPassword', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+		$this->form_validation->set_message('is_unique','This %s Already Exists!');
+		$this->form_validation->set_message('required','Valid %s is Required!');
 	
 		
 		if ($this->form_validation->run() == true)
@@ -182,6 +189,7 @@ class ireport extends CI_Controller {
 				'type'  => 'password',
 				'value' => $this->form_validation->set_value('inputConfirmPassword'),
 			);
+			$this->data['activeTab'] = "signup";
                         $this->load->view('ireport_login', $this->data);
 		}
 
@@ -500,6 +508,23 @@ class ireport extends CI_Controller {
 		//} else {
 		//	echo "This directs to homepage \n"; //$this->load->view('home'); 
 		//}
+	}
+	
+	function vote_issues()
+	{
+		if (!$this->ion_auth->logged_in())
+		{
+			//redirect them to the login page
+			redirect('ireport/user_login', 'refresh');
+		}
+		$reportID = $this->input->post('reportID');
+		$userID = $this->session->userdata('username');
+		if($this->ireport_model->vote_reports($userID, $reportID)) 
+		{	 // Vivek refresh your display with same criteria}
+		}
+		else 
+		{	//display error message}
+		}
 	}
 }
 ?>
