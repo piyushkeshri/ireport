@@ -43,12 +43,115 @@
                 window.location.hash = e.target.hash.replace("#", "#" + prefix);
             });
         </script>
+        <script>
+            window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '693361157352079',
+              status     : true, // check login status
+              cookie     : true, // enable cookies to allow the server to access the session
+              xfbml      : true,  // parse XFBML
+              oath       : true
+            });
+          
+          
+            
+          
+            // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+            // for any authentication related change, such as login, logout or session refresh. This means that
+            // whenever someone who was previously logged out tries to log in again, the correct case below 
+            // will be handled. 
+            FB.Event.subscribe('auth.authResponseChange', function(response) {
+              // Here we specify what we do with the response anytime this event occurs. 
+              if (response.status === 'connected') {
+                // The response object is returned with a status field that lets the app know the current
+                // login status of the person. In this case, we're handling the situation where they 
+                // have logged in to the app.
+                testAPI();
+              } else if (response.status === 'not_authorized') {
+          
+          
+                // In this case, the person is logged into Facebook, but not into the app, so we call
+                // FB.login() to prompt them to do so. 
+                // In real-life usage, you wouldn't want to immediately prompt someone to login 
+                // like this, for two reasons:
+                // (1) JavaScript created popup windows are blocked by most browsers unless they 
+                // result from direct interaction from people using the app (such as a mouse click)
+                // (2) it is a bad experience to be continually prompted to login upon page load.
+           FB.login(function(response) {
+             if (response.authResponse) {
+               console.log('Welcome!  Fetching opt1.... ');
+               FB.api('/me', function(response) {
+                 console.log('Good to see you :) ' + response.name + '.');
+               });
+             } else {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           });
+          
+          
+               // FB.login({scope: 'email,user_likes'});
+              } else {
+                // In this case, the person is not logged into Facebook, so we call the login() 
+                // function to prompt them to do so. Note that at this stage there is no indication
+                // of whether they are logged into the app. If they aren't then they'll see the Login
+                // dialog right after they log in to Facebook. 
+                // The same caveats as above apply to the FB.login() call here.
+          
+                 FB.login(function(response) {
+             if (response.authResponse) {
+               console.log('Welcome!  opt2... ');
+               FB.api('/me', function(response) {
+                 console.log('AUthorized, Good to see you opt2, ' + response.name + '. - \n');
+               });
+             } else {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           });
+                //FB.login({scope: 'email,user_likes'});
+              }
+            });
+            };
+          
+            // Load the SDK asynchronously
+            (function(d){
+             var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement('script'); js.id = id; js.async = true;
+             js.src = "//connect.facebook.net/en_US/all.js";
+             ref.parentNode.insertBefore(js, ref);
+            }(document));
+          
+            // Here we run a very simple test of the Graph API after login is successful. 
+            // This testAPI() function is only called in those cases. 
+            function testAPI() {
+              //console.log('Welcome!  Fetching your information.... ');
+              FB.api('/me', function(response) {
+          
+                document.getElementById("FBemail").value = response.email;
+                console.log(response);
+                console.log('OK to see you,' + response.name + " _ "+response.email +'.');
+              });
+            }
+          
+            function FBlogin(){
+            FB.login(function(response) {
+             if (response.authResponse) {
+               console.log('Welcome!  Fetching opt1.... ');
+               FB.api('/me', function(response) {
+                 console.log('Good to see you :) ' + response.name + '.');
+               });
+             } else {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           },{scope:'email,user_likes'})};
+
+        </script>
+
     </head>
     <body>
 
 <div class="container">
   <div class="row col-xs-12">
-
 
     <div class="main">
 
@@ -64,7 +167,7 @@
           <h3>Please Log In</a></h3>
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
+              <a href="#" onclick="FBlogin()" class="btn btn-lg btn-primary btn-block">Facebook</a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
               <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
@@ -109,7 +212,7 @@
       <h3>Create Account</a></h3>
       <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6">
-          <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
+          <a href="#" onclick="FBlogin()" class="btn btn-lg btn-primary btn-block">Facebook</a>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6">
           <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
@@ -166,6 +269,57 @@
   </div>
 </div>
 
+<div class="container position-center">
+  <div class="row">
+    <form class="form-signin mg-btm">
+      <h3 class="heading-desc">
+        <div id="fb-root"></div>
+        
+<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+    <button type="button" class="close pull-right" aria-hidden="true">×</button>
+    Login to iReport</h3>
+    <div class="social-box">
+      <div class="row mg-btm">
+             <div class="col-md-12">
+                <a href="#" onclick="FBlogin()" class="btn btn-primary btn-block">
+                  <i class="icon-facebook"></i>   Login with Facebook
+                </a>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-md-12">
+                <a href="#" class="btn btn-info btn-block" >
+                  <i class="icon-twitter"></i>   Login with Google
+                </a>
+            </div>
+          </div>
+    </div>
+    <div class="main">  
+        
+    <input type="text" class="form-control" placeholder="Email" autofocus>
+        <input type="password" class="form-control" placeholder="Password">
+   <input id="FBemail" type="text" class="form-control" placeholder="FB Email" autofocus>
+     
+        <!--Are you a business? <a href=""> Get started here</a> -->
+    <span class="clearfix"></span>  
+        </div>
+    <div class="login-footer">
+    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="left-section">
+                <a href="">Forgot your password?</a>
+                <a href="">Sign up now</a>
+              </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6 pull-right">
+                            <button type="submit" class="btn btn-large btn-danger pull-right">Login</button>
+                        </div>
+                    </div>
+    
+    </div>
+      </form>
+  </div>
+</div>
 
     </body>
 </html>
